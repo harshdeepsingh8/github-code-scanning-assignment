@@ -1,0 +1,30 @@
+name: Super-Linter
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  super-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Super-Linter
+        uses: super-linter/super-linter@v5
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+          # Only validate these languages
+          VALIDATE_PYTHON: true
+          VALIDATE_JAVASCRIPT: true
+
+          # Disable everything else
+          VALIDATE_JAVA: false
+          VALIDATE_ALL_CODEBASE: false
